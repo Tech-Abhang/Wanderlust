@@ -93,3 +93,30 @@ body{
     font-weight: 900;
     border: none !important;
 }
+
+/* show page */
+.show-img{
+    height: 30vh;
+    width: 60vh !important;
+    background-size: cover !important;
+}
+.btns{
+    display: flex;
+}
+.delete-btn{
+    border: none !important;
+    background-color: black !important;
+    color: white !important;
+}
+.edit-btn{
+    background-color: #fe424d !important;
+    color: black;
+    font-weight: 900;
+    border: none !important;
+    height: 2.25rem !important;
+}
+
+.card-text{
+    font-size: 1.25rem !important;
+    /* width: 30rem !important; */
+}
