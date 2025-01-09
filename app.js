@@ -7,6 +7,7 @@ const methodOverride = require("method-override")
 const ejsMate = require("ejs-mate")// helps for includes(common code)
 const wrapAsync = require("./utils/wrapAsync.js")
 const ExpressError = require("./utils/expressError.js")
+const {listingSchema} = require("./schema.js")
 
 app.set("view engine","ejs")
 app.set("views",path.join(__dirname,"views"))
@@ -51,6 +52,10 @@ app.get("/listings/:id",async (req,res)=>{
 
 //add
 app.post("/listings", wrapAsync(async (req,res,next) =>{
+    let result= listingSchema.validate(req.body)
+    if(result.error){
+        throw new ExpressError(400,result.error);
+    }
     const newListing = new Listing(req.body.listing)
     await newListing.save()
     res.redirect("/listings")
@@ -66,9 +71,6 @@ app.get("/listings/:id/edit",wrapAsync(async (req,res)=>{
 
 //update
 app.put("/listings/:id",wrapAsync(async(req,res)=>{
-    if(!req.body.listing){
-        throw new ExpressError(400,"send valid data for listing")
-    }
     let {id} = req.params;
     await Listing.findByIdAndUpdate(id,{...req.body.listing})
     res.redirect(`/listings/${id}`)
@@ -97,7 +99,8 @@ app.delete("/listings/:id",wrapAsync(async (req,res)=>{
 app.use((err,req,res,next)=>{
     let{statusCode = 500,message = "somethings wrong"} = err
     res.status(statusCode)
-    res.send("something went wrong")
+    res.render("error.ejs",{message})
+    // res.send("something went wrong")
 })
 
 app.all("*",(req,res,next)=>{
