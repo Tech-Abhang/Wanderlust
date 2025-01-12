@@ -98,6 +98,7 @@ app.post("/listings/:id/reviews",async(req,res)=>{
     listing.reviews.push(newReview)
     await newReview.save()
     await listing.save()
+    res.redirect(`/listings/${listing.id}`)
 })
 
 // app.get("/testListing",async (req,res)=>{
