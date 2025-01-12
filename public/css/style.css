@@ -96,8 +96,8 @@ body{
 
 /* show page */
 .show-img{
-    height: 30vh;
-    width: 60vh !important;
+    height: 55vh !important;
+    width: 105vh !important;
     background-size: cover !important;
 }
 .btns{
