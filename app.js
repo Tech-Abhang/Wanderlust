@@ -5,6 +5,7 @@ const path = require("path")
 const methodOverride = require("method-override")
 const ejsMate = require("ejs-mate")// helps for includes(common code)
 const ExpressError = require("./utils/expressError.js")
+const session = require("express-session")
 
 
 const listings = require("./routes/listing.js")
@@ -16,6 +17,14 @@ app.use(express.urlencoded({extended:true}))
 app.use(methodOverride("_method"))
 app.engine("ejs",ejsMate)
 app.use(express.static(path.join(__dirname,"public")))
+
+const sessionOptions ={
+    secret : "mysupersecretcode",
+    resave:false,
+    saveUnintialized:true
+}
+
+app.use(session(sessionOptions))
 
 //db
 main().then(()=>{
