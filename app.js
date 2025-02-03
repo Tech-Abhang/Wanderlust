@@ -6,7 +6,7 @@ const methodOverride = require("method-override")
 const ejsMate = require("ejs-mate")// helps for includes(common code)
 const ExpressError = require("./utils/expressError.js")
 const session = require("express-session")
-
+const flash = require("connect-flash")
 
 const listings = require("./routes/listing.js")
 const reviews = require("./routes/review.js")
@@ -32,6 +32,7 @@ const sessionOptions ={
 }
 
 app.use(session(sessionOptions))
+app.use(flash())
 
 //db
 main().then(()=>{
@@ -48,28 +49,19 @@ app.get("/",(req,res)=>{
     res.send("hi i am root")
 })
 
+app.use((req,res,next) =>{
+    res.locals.success = req.flash("success")
+    next()
+})
+
 app.use("/listings",listings)
 app.use("/listings/:id/reviews",reviews)
 
-
-// app.get("/testListing",async (req,res)=>{
-//     let sampleListing = new Listing({
-//         title:"My new villa",
-//         description:"by the beach",
-//         price:1200,
-//         location:"Goa",
-//         country:"India"
-//     })
-//     await sampleListing.save();
-//     console.log("sample was saved")
-//     res.send("sucessful testing")
-// })
 
 app.use((err,req,res,next)=>{
     let{statusCode = 500,message = "somethings wrong"} = err
     res.status(statusCode)
     res.render("error.ejs",{message})
-    // res.send("something went wrong")
 })
 
 app.all("*",(req,res,next)=>{

@@ -22,16 +22,16 @@ router.get("/",wrapAsync(async (req,res)=>{
 }))
 
 //new
-router.get("/new",wrapAsync((req,res)=>{
+router.get("/new", wrapAsync(async (req,res)=>{
     res.render("listings/new.ejs")
 }))
 
 //show
-router.get("/:id",async (req,res)=>{
+router.get("/:id", wrapAsync(async (req,res)=>{
     let {id} = req.params
     const listing = await Listing.findById(id).populate("reviews")
     res.render("listings/show.ejs",{listing})
-})
+}))
 
 
 //add
