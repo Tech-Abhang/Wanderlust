@@ -39,7 +39,24 @@
             </form>
         </div>
         <hr>
-        <p><%= listing.reviews %></p>
+        <div>
+            <h4>Reviews</h4>
+            <% if(listing.reviews.length > 0) { %>
+                <% for(let review of listing.reviews) { %>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Rating: <%= review.rating %>/5</h5>
+                            <p class="card-text"><%= review.comment %></p>
+                            <p class="card-subtitle mb-2 text-muted">
+                                <small>Reviewed on <%= review.createdAt.toLocaleDateString() %></small>
+                            </p>
+                        </div>
+                    </div>
+                <% } %>
+            <% } else { %>
+                <p>No reviews yet. Be the first to leave a review!</p>
+            <% } %>
+        </div>
         
     </div>
 </div>

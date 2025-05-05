@@ -1,0 +1,110 @@
+:root {
+  --dark-bg: #000000;  /* Pure black background */
+  --dark-text: #ffffff;  /* Pure white text */
+  --dark-card-bg: #1a1a1a;  /* Slightly lighter black for cards */
+  --dark-border: #333333;
+  --dark-nav-text: #e0e0e0;  /* Light gray for nav text */
+  --dark-link-hover: #4d94ff;  /* Light blue for hover states */
+}
+
+body.dark-mode {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+.dark-mode .card {
+  background-color: var(--dark-card-bg);
+  border-color: var(--dark-border);
+  transition: transform 0.2s;
+}
+
+.dark-mode .card:hover {
+  transform: translateY(-5px);
+}
+
+.dark-mode .navbar {
+  background-color: var(--dark-bg) !important;
+  border-bottom: 1px solid var(--dark-border);
+}
+
+.dark-mode .nav-link {
+  color: var(--dark-text) !important;
+}
+
+.dark-mode .nav-link:hover {
+  color: var(--dark-link-hover) !important;
+  opacity: 0.9;
+}
+
+.dark-mode .navbar-brand {
+  color: var(--dark-text) !important;
+}
+
+.dark-mode .listing-link {
+  color: var(--dark-text);
+  text-decoration: none;
+}
+
+.dark-mode .card-body {
+  background-color: var(--dark-card-bg);
+  color: var(--dark-text);
+}
+
+.dark-mode .card-text {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.dark-mode #darkModeToggle {
+  color: var(--dark-nav-text);
+  border-color: var(--dark-border);
+  background-color: transparent;
+}
+
+.dark-mode #darkModeToggle:hover {
+  color: var(--dark-text);
+  border-color: var(--dark-text);
+}
+
+#darkModeToggle {
+  margin-left: 10px;
+  padding: 5px 10px;
+}
+
+.dark-mode .navbar-toggler-icon {
+  filter: invert(1);
+}
+
+.dark-mode .navbar-toggler {
+  border-color: var(--dark-border);
+}
+
+/* Add smooth transition for dark mode toggle */
+body, .card, .navbar, .nav-link, .card-body {
+  transition: all 0.3s ease;
+}
+
+.dark-mode footer {
+  background-color: var(--dark-text);  /* White background */
+  color: var(--dark-bg);  /* Black text */
+  border-top: 1px solid var(--dark-border);
+}
+
+.dark-mode footer .nav-link {
+  color: var(--dark-bg) !important;  /* Black text for links */
+}
+
+.dark-mode footer .nav-link:hover {
+  color: #444444 !important;  /* Darker gray on hover */
+  opacity: 0.9;
+}
+
+.dark-mode footer a {
+  color: var(--dark-bg);  /* Black text for links */
+}
+
+.dark-mode footer p {
+  color: var(--dark-bg);  /* Black text for paragraphs */
+} 

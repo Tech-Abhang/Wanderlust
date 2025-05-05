@@ -1,5 +1,5 @@
 const express = require("express")
-const router = express.Router()
+const router = express.Router({mergeParams: true})
 const wrapAsync = require("../utils/wrapAsync.js")
 const ExpressError = require("../utils/expressError.js")
 const Review = require("../models/review.js")
@@ -24,9 +24,8 @@ router.post("/",validateReview,wrapAsync( async(req,res)=>{
     listing.reviews.push(newReview)
     await newReview.save()
     await listing.save()
+    req.flash("success", "Review added successfully!")
     res.redirect(`/listings/${listing.id}`)
 }))
-
-
 
 module.exports = router
