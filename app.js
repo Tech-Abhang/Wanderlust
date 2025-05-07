@@ -7,6 +7,9 @@ const ejsMate = require("ejs-mate")// helps for includes(common code)
 const ExpressError = require("./utils/expressError.js")
 const session = require("express-session")
 const flash = require("connect-flash")
+const User = require("./models/user.js")
+const passport = require("passport")
+const LocalStrategy = require("passport-local")
 
 const listings = require("./routes/listing.js")
 const reviews = require("./routes/review.js")
@@ -34,6 +37,12 @@ const sessionOptions ={
 app.use(session(sessionOptions))
 app.use(flash())
 
+app.use(passport.initialize())
+app.use(passport.session())
+passport.use(new LocalStrategy(User.authenticate()))
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 //db
 main().then(()=>{
     console.log("connected to db")
@@ -47,6 +56,16 @@ async function main() {
 
 app.get("/",(req,res)=>{
     res.send("hi i am root")
+})
+
+app.get("/demouser",async (req,res)=>{
+    let fakeuser = new User({
+        email:"test1@gmail.com",
+        username:"test1",
+    })
+
+    let registerUser = await User.register(fakeuser,"test1")
+    res.send(registerUser)
 })
 
 app.use((req,res,next) =>{
