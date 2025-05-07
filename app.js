@@ -11,8 +11,9 @@ const User = require("./models/user.js")
 const passport = require("passport")
 const LocalStrategy = require("passport-local")
 
-const listings = require("./routes/listing.js")
-const reviews = require("./routes/review.js")
+const listingsRouter = require("./routes/listing.js")
+const reviewsRouter = require("./routes/review.js")
+const userRouter = require("./routes/user.js")
 
 app.set("view engine","ejs")
 app.set("views",path.join(__dirname,"views"))
@@ -58,15 +59,6 @@ app.get("/",(req,res)=>{
     res.send("hi i am root")
 })
 
-app.get("/demouser",async (req,res)=>{
-    let fakeuser = new User({
-        email:"test1@gmail.com",
-        username:"test1",
-    })
-
-    let registerUser = await User.register(fakeuser,"test1")
-    res.send(registerUser)
-})
 
 app.use((req,res,next) =>{
     res.locals.success = req.flash("success")
@@ -74,8 +66,9 @@ app.use((req,res,next) =>{
     next()
 })
 
-app.use("/listings",listings)
-app.use("/listings/:id/reviews",reviews)
+app.use("/listings",listingsRouter)
+app.use("/listings/:id/reviews",reviewsRouter)
+app.use("/",userRouter)
 
 
 app.use((err,req,res,next)=>{
