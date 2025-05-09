@@ -81,7 +81,7 @@ app.all("*",(req,res,next)=>{
     next(new ExpressError(404,"page not found"))
 })
 
-app.listen(8080,()=>{
+app.listen(8000,()=>{
     console.log("listening to port 8080")
 })
 
