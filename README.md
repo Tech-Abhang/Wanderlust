@@ -46,9 +46,110 @@ Follow these steps to set up the project locally:
    npm install
    ```
 
-3. **Set up MongoDB**
-   - Make sure MongoDB is installed and running on your system
-   - The application will connect to `mongodb://127.0.0.1:27017/wanderlust` by default
+3. **Install and Set Up MongoDB**
+   
+   ### macOS
+   
+   **Using Homebrew:**
+   ```bash
+   # Install Homebrew if not already installed
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   
+   # Install MongoDB Community Edition
+   brew tap mongodb/brew
+   brew install mongodb-community@6.0
+   
+   # Start MongoDB service
+   brew services start mongodb-community@6.0
+   ```
+   
+   ### Windows
+   
+   1. Download the MongoDB Community Server installer from the [MongoDB website](https://www.mongodb.com/try/download/community)
+   2. Run the installer and follow the installation wizard
+   3. Choose "Complete" installation
+   4. Check the option "Install MongoDB as a Service"
+   5. Complete the installation
+   
+   ### Linux (Ubuntu/Debian)
+   
+   ```bash
+   # Import MongoDB public GPG key
+   wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
+   
+   # Create list file for MongoDB
+   echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+   
+   # Reload local package database
+   sudo apt-get update
+   
+   # Install MongoDB packages
+   sudo apt-get install -y mongodb-org
+   
+   # Start MongoDB service
+   sudo systemctl start mongod
+   
+   # Enable MongoDB to start on system boot
+   sudo systemctl enable mongod
+   ```
+   
+   ### Linux (RHEL/CentOS/Fedora)
+   
+   ```bash
+   # Create a .repo file for MongoDB
+   sudo tee /etc/yum.repos.d/mongodb-org-6.0.repo << EOF
+   [mongodb-org-6.0]
+   name=MongoDB Repository
+   baseurl=https://repo.mongodb.org/yum/redhat/\$releasever/mongodb-org/6.0/x86_64/
+   gpgcheck=1
+   enabled=1
+   gpgkey=https://www.mongodb.org/static/pgp/server-6.0.asc
+   EOF
+   
+   # Install MongoDB packages
+   sudo yum install -y mongodb-org
+   
+   # Start MongoDB service
+   sudo systemctl start mongod
+   
+   # Enable MongoDB to start on system boot
+   sudo systemctl enable mongod
+   ```
+   
+   ### Linux (Arch Linux)
+   
+   ```bash
+   # Install MongoDB from the AUR
+   git clone https://aur.archlinux.org/mongodb-bin.git
+   cd mongodb-bin
+   makepkg -si
+   
+   # Start and enable MongoDB service
+   sudo systemctl start mongodb
+   sudo systemctl enable mongodb
+   ```
+   
+   ### Verify installation
+   
+   ```bash
+   # Connect to MongoDB
+   mongosh
+   ```
+   
+   If MongoDB is running correctly, you should see the MongoDB shell prompt. Type `exit` to return to your regular shell.
+   
+   ### Create database
+   
+   ```bash
+   # Connect to MongoDB
+   mongosh
+   
+   # Create and switch to wanderlust database
+   use wanderlust
+   
+   # Exit MongoDB shell
+   exit
+   ```
 
 4. **Seed the database (optional)**
    ```bash
@@ -105,7 +206,3 @@ Contributions are welcome! If you'd like to improve Wanderhub, please:
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
-
-
-
----

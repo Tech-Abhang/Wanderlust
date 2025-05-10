@@ -52,7 +52,8 @@ main().then(()=>{
 });
 
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
+  const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/wanderlust';
+  await mongoose.connect(dbUrl);
 }
 
 app.get("/",(req,res)=>{
@@ -81,8 +82,9 @@ app.all("*",(req,res,next)=>{
     next(new ExpressError(404,"page not found"))
 })
 
-app.listen(8000,()=>{
-    console.log("listening to port 8080")
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`)
 })
 
 
