@@ -57,7 +57,7 @@ async function main() {
 }
 
 app.get("/",(req,res)=>{
-    res.send("hi i am root")
+    res.send("Welcome to wanderlust , route to /listings")
 })
 
 
